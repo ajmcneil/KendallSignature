@@ -1,0 +1,40 @@
+---
+title: "Generating extremal mixture copulas"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generating extremal mixture copulas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(extremalcopula)
+```
+
+First we illustrate how each extremal copula is coded with a binary number.
+```{r, echo=TRUE}
+codingset(c(1:8), 4)
+```
+
+Suppose we wanted to generate 10 realisations from copula 2 in 4 dimensions.
+```{r, echo=TRUE}
+U <- rextremal(rep(2, 10), 4)
+U
+cor(U)
+```
+
+Now suppose wanted generate a mixture from all 4 dimensional copulas. Here we use an increasing series of weights. The Pearson and Kendall correlations matrice of the extremal mixture copula are identical and their sample estimates should be close.
+```{r, echo=TRUE}
+set.seed(17)
+U <- rextremalmix((1:8)/36, 1000)
+cor(U)
+cor(U, method = "kendall")
+```
+
+

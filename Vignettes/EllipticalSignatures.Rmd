@@ -1,0 +1,102 @@
+---
+title: "Extremal mixtures with elliptical concordance signature"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Extremal mixtures with elliptical concordance signature}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(copula)
+library(extremalcopula)
+library(rgl)
+knitr::knit_hooks$set(webgl = hook_webgl)
+```
+
+### A 3-dimensional motivating example
+
+First consider a 3-dimensional t copula with degree-of-freedom parameter $\nu = 0.02$ and correlation values $\rho_{12} = 0.2$, $\rho_{13} = 0.5$ and $\rho_{23} = 0.8$. We simulate $n = 2000$ values from this copula and plot them.
+
+```{r, echo = TRUE, webgl=TRUE, fig.height = 3.5, fig.width = 3.5}
+corvals <- c(0.3, 0.5, 0.8)
+tcop <- tCopula(
+  df = 0.02,
+  param = corvals,
+  dim = 3,
+  dispstr = "un"
+)
+set.seed(13)
+n <- 2000
+data <- rCopula(n, tcop)
+plot3d(data, xlab = "U1", ylab = "U2", zlab = "U3")
+```
+
+We can count the proportions of points that are closest to each diagonal.
+
+```{r}
+table(quadrants(sign(data - 0.5), diagonal = TRUE))/n
+```
+
+Theory gives the concordance signature and the true weights of the corresponding mixture of extremal copulas as follows.
+
+```{r}
+kappa <- consignature(p2P(corvals))
+kappa
+solve(Amatrix(3), kappa)
+```
+
+### A 6-dimensional example
+
+Now consider an elliptical copula with the following correlation matrix.
+
+```{r, echo=TRUE}
+P <- copula::p2P((1:15) / 16)
+P
+```
+
+This is the concordance signature.
+```{r, echo=TRUE}
+kappa <- consignature(P)
+kappa
+```
+
+Here are the extremal weights.
+```{r, echo=TRUE}
+weights <- findextremal(kappa, named = FALSE)
+weights
+```
+
+Let's put all the results in a table.
+```{r, echo=TRUE}
+table <- extremaltable(kappa)
+knitr::kable(table)
+```
+
+We compute the Kendall's tau matrix of the extremal mixture copula and check it is equal to the Kendall's tau matrix of the elliptical copula, which is given by $2\arcsin(P)/\pi$.
+```{r, echo=TRUE}
+sum(weights)
+taumatrix <- Reduce('+', Map('*', weights, extcorr(1:32, 6)))
+taumatrix
+2*asin(P)/pi
+```
+We generate some data from the extremal mixture. The correlation matrix (whether computed by the Pearson, Kendall or Spearman method) should be close to the Kendall's tau matrix of the elliptical copula.
+```{r, echo=TRUE}
+set.seed(13)
+U <- rextremalmix(weights, 10000)
+cor(U)
+```
+
+
+Here is a scatterplot from the extremal mixture.
+```{r, fig.show='hold'}
+pairs(U[1:500,])
+```
+
+

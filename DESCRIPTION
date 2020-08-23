@@ -1,0 +1,17 @@
+Package: extremalcopula
+Title: Extremal Mixture Copulas 
+Version: 0.1.0
+Author: c(person("Alexander J.", "McNeil", email = "alexanderjmcneil@gmail.com", 
+                  role = c("aut", "cre")),
+                  person("Johanna", "Neslehova", email = "johanna.neslehova@mcgill.ca", 
+                  role = "aut")
+                  )
+Maintainer: The package maintainer <yourself@somewhere.net>
+Description: Generates data from normal mixture copulas and determines the mixtures that match concordance signatures
+License: GPL-3
+Encoding: UTF-8
+Imports: binaryLogic, gtools, mvtnorm, limSolve
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+LazyData: true
+RoxygenNote: 7.1.0

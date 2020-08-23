@@ -1,0 +1,64 @@
+---
+title: "A Kendall matrix that is not elliptical"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{A Kendall matrix that is not elliptical}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(extremalcopula)
+library(limSolve)
+```
+
+
+Here is a $4 \times 4$ correlation matrix. Note that it is positive definite.
+
+```{r, echo=TRUE}
+P <- copula::p2P(c(-0.19, -0.29, 0.49, -0.34, 0.3, -0.79))
+P
+
+eigen(P)$values
+```
+
+Could it be a matrix of Kendall's tau values? On the assumption that it is, let's calculate the pairwise probabilities of concordance. More precisely we find the first 7 elements of the concordance signature.
+
+```{r, echo=TRUE}
+kappa <- c(1, (1 + P[lower.tri(P)])/2)
+kappa
+```
+
+Let's see if we can find an extremal mixture copula that matches these probabilities of concordance. 
+
+```{r, echo=TRUE}
+weights <- attainable(kappa)
+weights
+```
+
+This vector of weights seems to do it. We can check by computing the weighted sum of the extremal correlation matrices.
+
+```{r, echo=TRUE}
+Reduce('+', Map('*', weights, extcorr(1:8, 4)))
+```
+
+Here is another set of weights that would also do it.
+```{r, echo=TRUE}
+weights2 <- attainable(kappa, maximize = TRUE)
+weights2
+Reduce('+', Map('*', weights2, extcorr(1:8, 4)))
+```
+
+Can we get this set of Kendall's tau values from an elliptical copula? Let's calculate the implied correlation matrix of the copula and check it is positive semi-definite.
+```{r, echo=TRUE}
+P2 <- sin(pi * P / 2)
+eigen(P2)$values
+```
+
+It isn't! So $P$ is an example of a Kendall's tau matrix that cannot be associated with an elliptically distributed random vector.

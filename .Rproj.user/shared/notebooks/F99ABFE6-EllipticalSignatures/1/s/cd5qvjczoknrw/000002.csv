@@ -1,0 +1,4 @@
+"0","table <- extremaltable(consignature(P))
+"
+"2","Error in if (names) { : argument is not interpretable as logical
+"

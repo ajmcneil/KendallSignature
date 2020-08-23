@@ -1,0 +1,8 @@
+"0","knitr::opts_chunk$set("
+"0","  collapse = TRUE,"
+"0","  comment = ""#>"""
+"0",")"
+"0","library(copula)"
+"0","library(extremalcopula)"
+"0","library(rgl)"
+"0","knitr::knit_hooks$set(webgl = hook_webgl)"

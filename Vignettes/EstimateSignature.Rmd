@@ -1,0 +1,46 @@
+---
+title: "Estimating a concordance signature"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Estimating a concordance signature}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(extremalcopula)
+library(mvtnorm)
+```
+
+Consider a Gaussian copula with the following correlation matrix.
+
+```{r, echo=TRUE}
+P <- copula::p2P((1:10) / 11)
+P
+```
+
+This is the true concordance signature.
+```{r, echo=TRUE}
+consignature(P)
+```
+
+We can generate some data from the copula and estimate the signature from the data.
+```{r, echo=TRUE}
+set.seed(17)
+data <- rmvnorm(1000, sigma = P)
+kappa <- estsignature(data)
+kappa
+```
+
+Note how this method gives the same Kendall's tau matrix as the standard estimator. This is only true in the absence of ties.
+```{r, echo=TRUE}
+tau <- c((2*kappa - 1)[2 : 11], (8*kappa - 1)[12 : 16]/7)
+tau
+cor(data, method = "kendall")
+```

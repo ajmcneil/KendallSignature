@@ -1,0 +1,70 @@
+---
+title: "Find polytope from partial concordance signature"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Find polytope from partial concordance signature}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(copula)
+library(extremalcopula)
+library(rcdd)
+library(gMOIP)
+library(rgl)
+knitr::knit_hooks$set(webgl = hook_webgl)
+```
+
+
+Here is a $4 \times 4$ matrix of Kendall's tau values and the corresponding partial concordance signature.
+
+```{r, echo=TRUE}
+tau <- c(-0.19, -0.29, 0.49, -0.34, 0.3, -0.79)
+p2P(tau)
+kappa <- c(1, (1+tau)/2)
+```
+
+We will find the vertices of the polytope of solutions for the extremal mixture copula that matches the concordance signature.
+
+```{r, echo=TRUE}
+findpolytope(kappa, d = 4)
+```
+
+There are two vertices, one which minimizes the fourth order concordance probability and one that maximizes it. Any convex combination of these vertices specifies a mixture of extremal copulas that matches the Kendall's tau values. Let's check this is true for the two vertices.
+
+```{r, echo=TRUE}
+kappa
+w <- findpolytope(kappa, d = 4)
+Amatrix(4) %*% t(w)
+```
+
+Now let's look at an example when the dimension of the copula is 5, all the pairwise concordance probabilities are 2/3 and the 4-dimensional concordance probabilities for $\{1, 2, 3, 4\}$ and $\{1, 2, 3, 5\}$ are both 0.4. In this case there are 9 vertices.
+
+```{r, echo=TRUE}
+d <- 5
+kappa <- c(1, rep(2/3, choose(d, 2)), 0.4, 0.4)
+w <- findpolytope(kappa, d = d)
+w
+```
+
+Let's check that they do give the asserted values for the concordance probabilities.
+```{r, echo=TRUE}
+allkappa <- Amatrix(d) %*% t(w)
+allkappa
+```
+
+The final 3 rows of the last matrix matrix specify  the 9 vertices of the polytope of attainable values for the unspecified 4th order concordance probabilities. Since there are only 3 of these values we can show the polytope in a 3-dimensional plot.
+```{r, echo=TRUE, webgl=TRUE, fig.height = 6, fig.width = 6}
+nvertex <- nrow(allkappa)
+vertices <- t(allkappa[(nvertex-2) : nvertex, ])
+plot3d(vertices)
+plotHull3D(vertices)
+```
