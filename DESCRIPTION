@@ -10,7 +10,7 @@ Maintainer: The package maintainer <yourself@somewhere.net>
 Description: Generates data from normal mixture copulas and determines the mixtures that match concordance signatures
 License: GPL-3
 Encoding: UTF-8
-Imports: binaryLogic, gtools, mvtnorm, limSolve
+Imports: binaryLogic, gtools, mvtnorm, limSolve, rcdd, rgl, gMOIP
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 LazyData: true
