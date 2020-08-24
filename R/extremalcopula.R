@@ -371,7 +371,7 @@ findpolytope <- function(sig, d){
   if (identical(m, n))
     findextremal(sig)
   A <- Amatrix(d)[(1:n),]
-  qux <- makeH(- diag(m), rep(0, m), A, sig)
+  qux <- rcdd::makeH(- diag(m), rep(0, m), A, sig)
   results <- scdd(qux)
   if (dim(results$output)[1] == 0)
     stop("Signature not attainable")
