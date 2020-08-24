@@ -1,6 +1,6 @@
 Package: extremalcopula
 Title: Extremal Mixture Copulas 
-Version: 0.1.0
+Version: 0.2.1
 Author: c(person("Alexander J.", "McNeil", email = "alexanderjmcneil@gmail.com", 
                   role = c("aut", "cre")),
                   person("Johanna", "Neslehova", email = "johanna.neslehova@mcgill.ca", 
