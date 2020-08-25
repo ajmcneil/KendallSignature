@@ -28,7 +28,7 @@ weights <- findpolytope(1, d = 3)
 weights
 ```
 
-Now we determines the correponding vertices of the polytope of concordance probabilities for the 3 pairs of random variables. There are 4 vertices: 3 vertices in which a single pair has concordance probaility one and the others have concordance probability zero; 1 vertex in which all pairs have concordance probability 1.
+Now we determine the correponding vertices of the polytope of concordance probabilities for the 3 pairs of random variables. There are 4 vertices: 3 vertices in which a single pair has concordance probability one and the others have concordance probability zero; 1 vertex in which all pairs have concordance probability 1.
 
 ```{r, echo=TRUE}
 allkappa <- Amatrix(3) %*% t(weights)
