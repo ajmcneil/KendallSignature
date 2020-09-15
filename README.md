@@ -1,5 +1,5 @@
 # extremalcopula
-This package illustrates the paper `On extremal mixtures and attainability of concordance signatures` by Alexander J. McNeil and Johanna Neslehova.
+This package illustrates the paper `On extremal mixtures and attainability of concordance signatures` by Alexander J. McNeil, Johanna G. Neslehova and Andrew D. Smith.
 
 To install:
 
