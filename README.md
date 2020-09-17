@@ -4,3 +4,5 @@ This package illustrates the paper `On extremal mixtures and attainability of co
 To install:
 
 `devtools::install_github("ajmcneil/extremalcopula", build_vignettes = TRUE)`
+
+(Tested on R4.0.2)
