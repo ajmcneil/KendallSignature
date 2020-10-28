@@ -4,12 +4,14 @@
 \alias{quadrants}
 \title{Identify quadrants of multivariate data points}
 \usage{
-quadrants(signs, diagonal = FALSE)
+quadrants(signs, diagonal = FALSE, pretty = FALSE)
 }
 \arguments{
 \item{signs}{a matrix containing signs of the data points}
 
 \item{diagonal}{whether quadrants on same diagonal should be amalgamated}
+
+\item{pretty}{whether sets should be printed in pretty fashion}
 }
 \value{
 a vector containing the quadrant of each point

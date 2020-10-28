@@ -279,6 +279,7 @@ attainable <- function(sig, maximize = FALSE) {
 #'
 #' @param signs a matrix containing signs of the data points
 #' @param diagonal whether quadrants on same diagonal should be amalgamated
+#' @param pretty whether sets should be printed in pretty fashion
 #'
 #' @return a vector containing the quadrant of each point
 #' @export
@@ -287,11 +288,14 @@ attainable <- function(sig, maximize = FALSE) {
 #' data <- rmvnorm(n = 1000, sigma = diag(3))
 #' table(quadrants(sign(data)))
 #' table(quadrants(sign(data), diagonal = TRUE))
-quadrants <- function(signs, diagonal = FALSE) {
+quadrants <- function(signs, diagonal = FALSE, pretty = FALSE) {
   if (diagonal)
     signs <- -signs * signs[, 1]
   bdata <- (signs + 1) / 2
-  paste2 <- function(v){paste("{",paste(v,collapse=","),"}",sep="")}
+  if (pretty)
+    paste2 <- function(v){paste("{",paste(v,collapse=","),"}",sep="")}
+  else
+    paste2 <- function(v){paste(v,collapse="")}
   apply(bdata, 1, paste2)
 }
 

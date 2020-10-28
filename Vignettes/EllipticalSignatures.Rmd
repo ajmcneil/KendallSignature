@@ -41,7 +41,7 @@ plot3d(data, xlab = "U1", ylab = "U2", zlab = "U3")
 We can count the proportions of points that are closest to each diagonal.
 
 ```{r}
-table(quadrants(sign(data - 0.5), diagonal = TRUE))/n
+table(quadrants(sign(data - 0.5), diagonal = TRUE, pretty = TRUE))/n
 ```
 
 Theory gives the concordance signature and the true weights of the corresponding mixture of extremal copulas as follows.

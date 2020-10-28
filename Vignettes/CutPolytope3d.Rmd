@@ -38,14 +38,14 @@ k.vertices
 
 We can display the polytope.
 
-```{r, echo=TRUE, webgl=TRUE, fig.height = 6, fig.width = 6}
+```{r, echo=TRUE, webgl=TRUE, message =F, warning =F,fig.height = 6, fig.width = 6}
 plot3d(k.vertices)
 plotHull3D(k.vertices)
 ```
 
 We repeat the exercise for the polytope that describes the possible Kendall rank correlation matrices. This is the cut polytope.
 
-```{r, echo=TRUE, webgl=TRUE, fig.height = 6, fig.width = 6}
+```{r, echo=TRUE, webgl=TRUE, message =F, warning =F, fig.height = 6, fig.width = 6}
 alltau <- 2*allkappa -1
 t.vertices <- t(alltau[-1, ])
 t.vertices
