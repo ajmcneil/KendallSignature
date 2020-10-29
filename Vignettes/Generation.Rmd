@@ -1,10 +1,10 @@
 ---
-title: "Generating extremal mixture copulas"
+title: "Generating mixtures of extremal copulas"
 author: "Alexander J. McNeil and Johanna Neslehova"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generating extremal mixture copulas}
+  %\VignetteIndexEntry{Generating mixtures of extremal copulas}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 )
 library(extremalcopula)
 ```
-
+### Generating mixtures of extremal copulas
 First we illustrate how each extremal copula is coded with a binary number.
 ```{r, echo=TRUE}
-codingset(c(1:8), 4)
+binarycoding(c(1:8), 4)
 ```
 
 Suppose we wanted to generate 10 realisations from copula 2 in 4 dimensions.

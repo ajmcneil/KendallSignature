@@ -1,6 +1,6 @@
 Package: extremalcopula
 Title: Extremal Mixture Copulas 
-Version: 0.2.1
+Version: 0.2.2
 Author: c(person("Alexander J.", "McNeil", email = "alexanderjmcneil@gmail.com", 
                   role = c("aut", "cre")),
                   person("Johanna", "Neslehova", email = "johanna.neslehova@mcgill.ca", 
@@ -11,6 +11,11 @@ Description: Generates data from normal mixture copulas and determines the mixtu
 License: GPL-3
 Encoding: UTF-8
 Imports: binaryLogic, gtools, mvtnorm, limSolve, rcdd, rgl, gMOIP
+Collate:
+    'basic.R'
+    'extremalmatching.R'
+    'attainable.R'
+    'estimation.R'
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 LazyData: true
