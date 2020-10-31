@@ -77,6 +77,24 @@ extcorr <- function(k, d){
   output
 }
 
+#' Correlation matrix of extremal mixture copula
+#'
+#' @param w vector of weights specifying the extremal mixture copula
+#'
+#' @return correlation matrix of the extremal mixture copula
+#' @export
+#'
+#' @examples
+#' extmixcorr(rep(1, 8))
+extmixcorr <- function(w) {
+  if (abs(sum(w) - 1) > 1e-05)
+    stop("Infeasible weight vector w (must sum to 1)")
+  d <- as.integer(log(length(w))/log(2) + 1)
+  if (!(identical(as.integer(2^(d - 1)), length(w))))
+    stop("Infeasible weight vector w (wrong length)")
+  Reduce('+', Map('*', w, extcorr(1:2 ^ (d - 1), d)))
+}
+
 #' Sample from extremal copulas
 #'
 #' @param k a vector of integers between one and 2^(d-1) specifying extremal
