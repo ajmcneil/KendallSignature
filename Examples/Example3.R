@@ -85,6 +85,6 @@ points(2*fullsig["{2,4}"]-1, 2*fullsig["{3,4}"]-1)
 
 #################################################
 
-plane_pts <- cbind(rep(as.numeric(2*full_sig["{1,4}"]-1), dim(taus2_hull)[1]), taus2_hull)
-dimnames(plane_pts)[[2]] <- names(missing3)
+plane_pts <- cbind(rep(as.numeric(2*fullsig["{1,4}"]-1), dim(taus2_hull)[1]), taus2_hull)
+dimnames(plane_pts)[[2]] <- c("{1,4}", "{2,4}", "{3,4}")
 plotHull3D(plane_pts)
