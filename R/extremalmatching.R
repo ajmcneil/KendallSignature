@@ -124,7 +124,7 @@ consignature <- function(P, limit = TRUE, named = TRUE){
     combs <- gtools::combinations(d, nelements, repeats.allowed = FALSE)
     for (i in 1:n_layer[j]) {
       thecomb <- combs[i, ]
-      B[pos+1] <- Gaussorthant(P[thecomb, thecomb])
+      B[pos+1] <- 2*Gaussorthant(P[thecomb, thecomb])
       pos <- pos + 1
     }
   }
@@ -145,7 +145,7 @@ consignature <- function(P, limit = TRUE, named = TRUE){
 #' Gaussorthant(P)
 Gaussorthant<- function(P){
   d <- length(diag(P))
-  2*as.numeric(mvtnorm::pmvnorm(lower = rep(0, d), sigma = P))
+  as.numeric(mvtnorm::pmvnorm(lower = rep(0, d), sigma = P))
 }
 
 
