@@ -1,10 +1,10 @@
 ---
-title: "Estimating a concordance signature"
+title: "Estimating concordance signatures"
 author: "Alexander J. McNeil and Johanna Neslehova"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Estimating a concordance signature}
+  %\VignetteIndexEntry{Estimating concordance signatures}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 )
 library(extremalcopula)
 library(mvtnorm)
+library(qrmdata)
+library(rgl)
+library(gMOIP)
+library(xts)
+knitr::knit_hooks$set(webgl = hook_webgl)
 ```
 ### Estimating concordance signature from data
 
@@ -44,4 +49,80 @@ Note how this method gives the same Kendall's tau matrix as the standard estimat
 tau <- c((2*kappa - 1)[2 : 11], (8*kappa - 1)[12 : 16]/7)
 tau
 cor(data, method = "kendall")
+```
+
+### Estimating concordance signature for real data
+
+In the next example we take some cryptocurrency data. The dataset is 4-dimensional and contains the prices of Bitcoin, Ethereum, Litecoin and Ripple is US dollars. We look at the daily log-returns for the year 2017.
+```{r, echo = TRUE, fig.show='hold', fig.height = 6, fig.width = 6}
+data(crypto)
+data <- crypto['2016-12-31/2017-12-31']
+X <- (diff(log(data))[-1]) * 100
+plot(X, multi.panel=TRUE)
+```
+
+Now we estimate the concordance signature and find an extremal mixture copula that matches the estimated signature.
+```{r, echo = TRUE}
+fullsig <- estsignature(as.matrix(X))
+fullsig
+findextremal(fullsig)
+```
+
+### Inferring Kendall correlations for missing variables
+
+Let us suppose that we had no information about the fourth cryptocurrency, Ripple, and had to infer possible rank correlation values from knowledge of the other three. 
+
+We want to find the concordance signatures that are consistent with our existing knowledge. We first find the vertices of the polytope of possible weight vectors.
+```{r, echo = TRUE}
+sig_3missing <- fullsig[c("empty", "{1,2}", "{1,3}", "{2,3}")]
+sig_3missing
+d <- 4
+vert <- findpolytope(sig_3missing, d = d)
+nvert <- dim(vert)[1]
+vert
+```
+
+We can check that each of these vertices is a concordance signature that matches the given values of Kendall's tau. Here we consider the final vertex.
+```{r, echo = TRUE}
+output <- vector("list", length = nvert)
+for (i in 1:nvert)
+  output[[i]] <- extmixcorr(vert[i,])
+output[[nvert]] 
+2 * sig_3missing - 1
+```
+
+We now find the set of possible values for the Kendall rank correlations of the pairs $\{1,4\}$, $\{2,3\}$ and $\{3,4\}$.
+```{r, echo = TRUE, webgl=TRUE, message =F, warning =F,fig.height = 6, fig.width = 6}
+kappas <- Amatrix(d) %*% t(vert)
+kappas3 <- t(kappas[c("{1,4}", "{2,4}", "{3,4}"), ])
+taus3 <- 2*kappas3 -1
+taus3_hull <- taus3[convexHull(taus3)$pts[,"vtx"],]
+taus3_hull <- round(taus3_hull, 8)
+plot3d(taus3_hull, plot=FALSE)
+plotHull3D(taus3_hull, drawPoints = TRUE, drawLines=FALSE, drawPolygons=TRUE)
+```
+
+If an expert gave his opinion on the values of the Kendall rank correlations between Ripple and the other cryptocurrencies, the resulting point would have to lie within this 3-dimensional convex polytope.
+
+Now suppose that we are told that $\tau_{\{1,4\}} =$ 0.5978323 (the actual estimated value). This is possible because the plane it specifies intersects with the polytope. The set of attainable values for the remaining rank correlations is a convex planar set as shown below and, unsuprisingly, the true estimated values lie within it. 
+```{r, echo = TRUE, fig.show='hold'}
+sig_2missing <- fullsig[c("empty", "{1,2}", "{1,3}", "{1,4}", "{2,3}")]
+sig_2missing
+vert <- findpolytope(sig_2missing, d = d)
+nvert <- dim(vert)[1]
+kappas <- Amatrix(d) %*% t(vert)
+kappas2 <- t(kappas[c("{2,4}", "{3,4}"), ])
+taus2 <- 2*kappas2 -1
+taus2_hull <- taus2[convexHull(taus2)$pts[,"vtx"],]
+plot(taus2_hull, col = 2, xlim = c(-1,1), ylim = c(-1,1))
+lines(rbind(taus2_hull, taus2_hull[1,]))
+points(2*fullsig["{2,4}"]-1, 2*fullsig["{3,4}"]-1)
+```
+
+We can add this set to our 3-dimensional plot.
+```{r, echo = TRUE, webgl=TRUE, message =F, warning =F,fig.height = 6, fig.width = 6}
+component14 <- rep(as.numeric(2*fullsig["{1,4}"]-1), dim(taus2_hull)[1])
+plane_pts <- cbind(component14, taus2_hull)
+dimnames(plane_pts)[[2]] <- c("{1,4}", "{2,4}", "{3,4}")
+plotHull3D(plane_pts)
 ```
