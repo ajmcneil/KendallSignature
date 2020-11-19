@@ -3,6 +3,6 @@ This package illustrates the paper `On attainability of Kendall's tau matrices a
 
 To install:
 
-`devtools::install_github("ajmcneil/KendallGignature", build_vignettes = TRUE)`
+`devtools::install_github("ajmcneil/KendallSignature", build_vignettes = TRUE)`
 
 (Tested on R4.0.2)
