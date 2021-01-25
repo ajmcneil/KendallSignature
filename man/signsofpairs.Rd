@@ -16,6 +16,6 @@ a matrix of length n*(n-1)/2
 Compute signs of differences of pairs
 }
 \examples{
-data <- rmvnorm(n = 10, sigma = diag(3))
+data <- mvtnorm::rmvnorm(n = 10, sigma = diag(3))
 signsofpairs(data)
 }

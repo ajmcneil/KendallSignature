@@ -1,18 +1,31 @@
 Package: KendallSignature
+Type: Package
 Title: Kendall Concordance Signatures
-Version: 0.1.1
-Author: c(person("Alexander J.", "McNeil", email = "alexanderjmcneil@gmail.com", 
+Version: 0.1.2
+Date: 2021-01-25
+Authors@R: c(person("Alexander J.", "McNeil", email = "alexanderjmcneil@gmail.com", 
                   role = c("aut", "cre")),
                   person("Johanna", "Neslehova", email = "johanna.neslehova@mcgill.ca", 
                   role = "aut")
                   )
-Description: Functions for determining attainable Kendall concordance signatures and the mixtures of extremal copulas that match concordance signatures
-Depends: R (>= 3.1.0)
+Maintainer: Alexander J. McNeil <alexanderjmcneil@gmail.com>                   
+Description: Functions for determining attainable Kendall concordance signatures and the mixtures of extremal copulas that match concordance signatures.
+Depends: R (>= 3.5.0)
 License: GPL-3
 Lazydata: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
-Imports: binaryLogic, gtools, mvtnorm, limSolve, rcdd, rgl, gMOIP
+Imports: stats,
+         binaryLogic, 
+         gtools, 
+         copula,
+         mvtnorm, 
+         limSolve, 
+         rcdd, 
+         rgl, 
+         gMOIP,
+         xts,
+         qrmdata
 Collate:
     'basic.R'
     'extremalmatching.R'

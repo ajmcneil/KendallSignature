@@ -14,11 +14,11 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(extremalcopula)
+library(KendallSignature)
 library(rcdd)
 library(rgl)
 library(gMOIP)
-knitr::knit_hooks$set(webgl = hook_webgl)
+setupKnitr()
 ```
 ### Polytope of weights
 

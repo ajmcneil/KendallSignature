@@ -19,6 +19,6 @@ Find polytope of attainable weights from partial concordance signature
 }
 \examples{
 tau <- c(-0.19, -0.29, 0.49, -0.34, 0.3, -0.79)
-kappa <- (1+tau)/2
-findpolytope(c(1, kappa), d = 4)
+kappa <- c(1, (1 + tau)/2)
+findpolytope(kappa, d = 4)
 }

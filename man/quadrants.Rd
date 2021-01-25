@@ -20,7 +20,7 @@ a vector containing the quadrant of each point
 Identify quadrants of multivariate data points
 }
 \examples{
-data <- rmvnorm(n = 1000, sigma = diag(3))
+data <- mvtnorm::rmvnorm(n = 1000, sigma = diag(3))
 table(quadrants(sign(data)))
 table(quadrants(sign(data), diagonal = TRUE))
 }

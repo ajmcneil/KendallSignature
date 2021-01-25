@@ -15,9 +15,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 library(copula)
-library(extremalcopula)
+library(KendallSignature)
 library(rgl)
-knitr::knit_hooks$set(webgl = hook_webgl)
+setupKnitr()
 ```
 
 ### A 3-dimensional motivating example
@@ -26,7 +26,7 @@ First consider a 3-dimensional t copula with degree-of-freedom parameter $\nu = 
 
 ```{r, echo = TRUE, webgl=TRUE, fig.height = 3.5, fig.width = 3.5}
 corvals <- c(0.3, 0.5, 0.8)
-tcop <- tCopula(
+tcop <- copula::tCopula(
   df = 0.02,
   param = corvals,
   dim = 3,
@@ -34,7 +34,7 @@ tcop <- tCopula(
 )
 set.seed(13)
 n <- 2000
-data <- rCopula(n, tcop)
+data <- copula::rCopula(n, tcop)
 plot3d(data, xlab = "U1", ylab = "U2", zlab = "U3")
 ```
 

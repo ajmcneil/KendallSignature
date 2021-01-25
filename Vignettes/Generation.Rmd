@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(extremalcopula)
+library(KendallSignature)
 ```
 ### Generating mixtures of extremal copulas
 First we illustrate how each extremal copula is coded with a binary number.

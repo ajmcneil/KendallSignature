@@ -8,7 +8,7 @@
 #' @export
 #'
 #' @examples
-#' data <- rmvnorm(n = 1000, sigma = diag(3))
+#' data <- mvtnorm::rmvnorm(n = 1000, sigma = diag(3))
 #' table(quadrants(sign(data)))
 #' table(quadrants(sign(data), diagonal = TRUE))
 quadrants <- function(signs, diagonal = FALSE, pretty = FALSE) {
@@ -30,7 +30,7 @@ quadrants <- function(signs, diagonal = FALSE, pretty = FALSE) {
 #' @export
 #'
 #' @examples
-#' data <- rmvnorm(n = 10, sigma = diag(3))
+#' data <- mvtnorm::rmvnorm(n = 10, sigma = diag(3))
 #' signsofpairs(data)
 signsofpairs <- function(data){
   d <- ncol(data)
@@ -73,6 +73,6 @@ estsignature <- function(data){
     t1 <- t1 + (t2+t3)/2
   }
   weights <- 2*t1/(n*(n-1))
-  kappa <- Amatrix(d, name = TRUE) %*% weights
+  kappa <- Amatrix(d, named = TRUE) %*% weights
   drop(kappa)
 }

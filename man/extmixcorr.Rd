@@ -16,5 +16,5 @@ correlation matrix of the extremal mixture copula
 Correlation matrix of extremal mixture copula
 }
 \examples{
-extmixcorr(rep(1, 8))
+extmixcorr(rep(1, 8)/8)
 }

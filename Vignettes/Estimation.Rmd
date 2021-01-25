@@ -14,13 +14,13 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-library(extremalcopula)
+library(KendallSignature)
 library(mvtnorm)
 library(qrmdata)
 library(rgl)
 library(gMOIP)
 library(xts)
-knitr::knit_hooks$set(webgl = hook_webgl)
+setupKnitr()
 ```
 ### Estimating concordance signature from data
 

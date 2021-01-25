@@ -6,6 +6,7 @@
 #'
 #' @return a matrix with as many rows as the length of k and d columns containing zeros and ones
 #' @export
+#' @import stats
 #'
 #' @examples
 #' binarycoding(c(1:8), 4)
@@ -85,7 +86,7 @@ extcorr <- function(k, d){
 #' @export
 #'
 #' @examples
-#' extmixcorr(rep(1, 8))
+#' extmixcorr(rep(1, 8)/8)
 extmixcorr <- function(w) {
   if (abs(sum(w) - 1) > 1e-05)
     stop("Infeasible weight vector w (must sum to 1)")
