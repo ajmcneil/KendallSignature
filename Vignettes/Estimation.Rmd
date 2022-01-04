@@ -97,7 +97,7 @@ kappas <- Amatrix(d) %*% t(vert)
 kappas3 <- t(kappas[c("{1,4}", "{2,4}", "{3,4}"), ])
 taus3 <- 2*kappas3 -1
 taus3_hull <- taus3[convexHull(taus3)$pts[,"vtx"],]
-taus3_hull <- round(taus3_hull, 8)
+taus3_hull <- round(taus3_hull, 10)
 plot3d(taus3_hull, plot=FALSE)
 plotHull3D(taus3_hull, drawPoints = TRUE, drawLines=FALSE, drawPolygons=TRUE)
 ```
