@@ -11,16 +11,13 @@ vignette: >
 
 
 ```{r setup, include = FALSE}
-    knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 library(copula)
 library(KendallSignature)
 library(rcdd)
 library(gMOIP)
 library(rgl)
-setupKnitr()
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::knit_hooks$set(webgl = hook_webgl)
 ```
 
 ### A 4D example with equicorrelation structure

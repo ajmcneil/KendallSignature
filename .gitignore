@@ -5,3 +5,5 @@ Meta
 .Rbuildignore
 .Rhistory
 .DS_Store
+/doc/
+/Meta/

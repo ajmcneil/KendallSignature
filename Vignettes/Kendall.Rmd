@@ -10,15 +10,12 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 library(KendallSignature)
 library(rcdd)
 library(rgl)
 library(gMOIP)
-setupKnitr()
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::knit_hooks$set(webgl = hook_webgl)
 ```
 ### Polytope of weights
 
@@ -46,6 +43,7 @@ We can display the polytope.
 plot3d(k.vertices)
 plotHull3D(k.vertices)
 ```
+
 ### Polytope of Kendall rank correlations (cut polytope)
 
 We repeat the exercise for the polytope that describes the possible Kendall rank correlation matrices. This is the cut polytope.
@@ -57,6 +55,7 @@ t.vertices
 plot3d(t.vertices)
 plotHull3D(t.vertices)
 ```
+
 ### An unattainable matrix
 
 Here is a positive-definite correlation matrix.

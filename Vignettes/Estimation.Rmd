@@ -10,17 +10,14 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 library(KendallSignature)
 library(mvtnorm)
 library(qrmdata)
 library(rgl)
 library(gMOIP)
 library(xts)
-setupKnitr()
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::knit_hooks$set(webgl = hook_webgl)
 ```
 ### Estimating concordance signature from data
 
@@ -98,7 +95,7 @@ kappas3 <- t(kappas[c("{1,4}", "{2,4}", "{3,4}"), ])
 taus3 <- 2*kappas3 -1
 taus3_hull <- taus3[convexHull(taus3)$pts[,"vtx"],]
 taus3_hull <- round(taus3_hull, 10)
-plot3d(taus3_hull, plot=FALSE)
+plot3d(taus3_hull)
 plotHull3D(taus3_hull, drawPoints = TRUE, drawLines=FALSE, drawPolygons=TRUE)
 ```
 
