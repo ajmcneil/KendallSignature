@@ -148,7 +148,35 @@ Gaussorthant<- function(P){
   as.numeric(mvtnorm::pmvnorm(lower = rep(0, d), sigma = P))
 }
 
-
-
+#' Construct B matrix in dimension d
+#'
+#' @param d the dimension
+#' @param named logical value to determine whether rows and columns are named
+#' @param scale if this is set to false the final scaling of the columns by multiplicity
+#' is not carried out
+#'
+#' @return a square matrix with 1 + floor(d/2) rows and columns
+#' @export
+#'
+#' @examples
+#' Bmatrix(7)
+Bmatrix <- function(d, named = TRUE, scale = TRUE){
+  hj <- (d:ceiling(d/2))
+  li <- 2*(0:(floor(d/2)))
+  outfunc <- function(l,h,d){
+    choose(d-l, h-l) + choose(d-l, d-h-l)*as.numeric(l > 0)
+  }
+  output <- outer(li, hj, FUN = outfunc, d = d)
+  if ((d %% 2) == 0)
+    output[, length(hj)] <- output[, length(hj)]/2
+  if (scale)
+    output <- t(t(output)/output[1,])
+  if (named){
+    namesj <- paste("eta", hj, sep = "")
+    namesi <- paste("kappa", li, sep = "")
+    dimnames(output) <- list(namesi, namesj)
+  }
+  output
+}
 
 
