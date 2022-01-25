@@ -1,0 +1,53 @@
+---
+title: "Signatures of equiconcordant copulas"
+author: "Alexander J. McNeil and Johanna Neslehova"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Signatures of equiconcordant copulas}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(KendallSignature)
+library(rgl)
+library(gMOIP)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+knitr::knit_hooks$set(webgl = hook_webgl)
+```
+### Matrix $B_d$ for equiconcordant copulas
+
+We generate the matrix $B_d$ when $d=7$.
+
+```{r, echo=TRUE}
+d <- 7
+Bmatrix(d)
+```
+
+We can display the polytope of attainable skeletal signatures for equiconcordant (or exchangeable) copulas.
+
+```{r, echo=TRUE, webgl=TRUE, message =F, warning =F, fig.height = 6, fig.width = 6}
+v <- t(Bmatrix(d)[-1,])
+plot3d(v,  xlim = c(0,1))
+plotHull3D(v, drawPoints = TRUE, drawLines=TRUE, drawPolygons=TRUE)
+```
+
+We can add a curve to show the possible signatures of exchangeable elliptical copulas when $d=7$.
+
+```{r, echo = TRUE, webgl=TRUE, message =F, warning =F, fig.height = 6, fig.width = 6}
+rho <- seq(from = -1/6, to = 1-1e-10, length=60)
+output <- matrix(NA, nrow = length(rho), ncol = floor(d/2))
+for (i in 1:length(rho)){
+  P <- matrix(rho[i], nrow = d, ncol = d)
+  diag(P) <- rep(1,d)
+  kappa <- consignature(P)
+  kappas <- 2*(0:(floor(d/2)))
+  kapparows <- cumsum(choose(d, kappas))
+  output[i,] <- kappa[kapparows[-1]]
+}
+points3d(output, lty = 2)
+lines3d(output)
+```
+
+
